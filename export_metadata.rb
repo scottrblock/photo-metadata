@@ -6,7 +6,7 @@ include Magick
 
 class ExportMetadata
   SOURCE_PATH = "photos/src/"
-  EXPORT_PATH = "photos/public/"
+  EXPORT_PATH = "gatsby-site/content/gallery/"
 
   def perform
     Dir["#{SOURCE_PATH}/*"].each do |filename|
