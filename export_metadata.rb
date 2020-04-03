@@ -2,6 +2,7 @@
 
 require "date"
 require "rmagick"
+require 'securerandom'
 include Magick
 
 class ExportMetadata
@@ -9,10 +10,11 @@ class ExportMetadata
   EXPORT_PATH = "gatsby-site/content/gallery/"
 
   def perform
-    Dir["#{SOURCE_PATH}/*"].each do |filename|
+    Dir["#{SOURCE_PATH}*"].each_with_index do |filename, i|
       image = ImageList.new(filename)[0]
       date_string = Date.strptime(Image.read(filename)[0]["exif:DateTimeOriginal"], '%Y:%m:%d').to_s
-      image.write("#{EXPORT_PATH}photo-#{date_string}.jpg")
+      uid = SecureRandom.hex(10)
+      image.write("#{EXPORT_PATH}#{date_string}-#{uid}.jpg")
     end
   end
 end
